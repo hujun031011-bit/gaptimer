@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GapTimer</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; background: #f8f9fa; }
+    h1 { font-size: 2.5em; margin: 20px 0; color: #4a6fa5; }
+    .slogan { color: #6c757d; margin-bottom: 30px; }
+    input[type="date"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin: 20px 0; }
+    .gap-day { font-size: 3em; font-weight: bold; color: #28a745; margin: 20px 0; }
+    .rank-item { background: white; padding: 12px; margin: 10px 0; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>GapTimer</h1>
+  <p class="slogan">Gap, Not Alone.</p>
+  <input type="date" id="startDate">
+  <div class="gap-day" id="gapDay">--</div>
+  <h2>全船牛马，今日存活报告</h2>
+  <div class="rank-item">@卷不动了, 63天 — 简历投了200份，回了3个“感谢”</div>
+  <div class="rank-item">@大理在逃打工人, 112天 — 靠卖手冲咖啡续命，日入30</div>
+  <div class="rank-item">@考公二战选手, 45天 — 行测错题比我头发多</div>
+  <div class="rank-item">@前大厂牛马, 28天 — 每天打游戏，但睡得超香</div>
+  <div class="rank-item">@暂停人生实验员, 90天 — Gap是唯一KPI</div>
+  <script>
+    const input = document.getElementById('startDate');
+    const gapDayEl = document.getElementById('gapDay');
+    input.addEventListener('change', (e) => {
+      localStorage.setItem('gapStartDate', e.target.value);
+      updateGapDay(e.target.value);
+    });
+    function updateGapDay(dateStr) {
+      const diffDays = Math.ceil((Date.now() - new Date(dateStr)) / 86400000);
+      gapDayEl.textContent = diffDays > 0 ? diffDays : 0;
+    }
+    if (localStorage.getItem('gapStartDate')) {
+      input.value = localStorage.getItem('gapStartDate');
+      updateGapDay(localStorage.getItem('gapStartDate'));
+    }
+  </script>
+</body>
+</html>
